@@ -1,0 +1,13 @@
+.app {
+  display: grid;
+  grid-template-rows: min-content 1fr min-content;
+
+  &__header {
+  }
+
+  &__content {
+  }
+
+  &__footer {
+  }
+}
