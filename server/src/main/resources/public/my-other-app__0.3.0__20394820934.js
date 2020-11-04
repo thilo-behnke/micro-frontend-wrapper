@@ -1,5 +1,5 @@
 (function() {
-    const appId = 'my-other-app';
+    const appId = 'other-simple-js-app';
     const version = '0.3.0';
 
     const createApp = () => {
