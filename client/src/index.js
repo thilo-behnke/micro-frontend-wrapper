@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import Wrapper from './Wrapper';
 import reportWebVitals from './reportWebVitals';
+
+import './index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 if(!window.MICRO_FRONTEND_WRAPPER) {
     window.MICRO_FRONTEND_WRAPPER = {};

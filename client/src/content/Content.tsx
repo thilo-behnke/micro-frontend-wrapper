@@ -1,6 +1,8 @@
 import React, {useEffect} from "react";
 import {AppManifest} from "../manifest/ManifestProvider";
 import './Content.scss';
+import {Alert} from "react-bootstrap";
+import classNames from "classnames";
 
 function Content(props: ContentProps) {
     useEffect(() => {
@@ -11,12 +13,13 @@ function Content(props: ContentProps) {
     return <div className="content-wrapper">
         {
             props.activeApp
-                ? <div className={props.className}>
+                ? <Alert variant="success" className={classNames('d-flex', 'justify-content-center', props.className)}>
                     {props.activeApp?.appName} is active!
-                </div>
-                : <div>No app is active</div>
+                </Alert>
+                : <Alert variant="danger" className={classNames('d-flex', 'justify-content-center', props.className)}>No
+                    app is active</Alert>
         }
-        <div id="content-box">
+        <div id="content-box" className={classNames('d-flex', 'justify-content-center')}>
         </div>
     </div>;
 }

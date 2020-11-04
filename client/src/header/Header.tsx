@@ -1,9 +1,12 @@
 import React from "react";
 import {AppManifest} from "../manifest/ManifestProvider";
+import {Button} from "react-bootstrap";
+import classNames from "classnames";
+import './Header.scss';
 
 function Header(props: HeaderProps) {
-    return <div className={props.className}> {props.availableApps.map(app => <button onClick={() => props.setActiveApp(app)}
-        key={app.appId}>{app.appName}</button>)} </div>
+    return <div className={classNames(props.className, 'header-content')}> {props.availableApps.map(app => <Button onClick={() => props.setActiveApp(app)}
+        key={app.appId}>{app.appName}</Button>)} </div>
 }
 
 export type HeaderProps = {
