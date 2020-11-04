@@ -1,19 +1,23 @@
 import React, {useEffect, useState} from "react";
 import "./Wrapper.scss";
 import {
-    DefaultManifestProvider,
     AppManifest,
+    DefaultManifestProvider,
     ManifestProvider,
     ManifestProviderContext
 } from "./manifest/ManifestProvider";
 import Content from "./content/Content";
 import Header from "./header/Header";
+import {usePrevious} from "./utils/PreviousHook";
 
 // TODO: There needs to be a wrapper around App that provides this value.
 const manifestProvider: ManifestProvider = new DefaultManifestProvider();
 
 function Wrapper() {
+    const [activeApp, setActiveApp] = useState<AppManifest | null>(null);
     const [availableApps, setAvailableApps] = useState<AppManifest[]>([]);
+
+    const prevActiveApp = usePrevious<AppManifest | null>(activeApp) as AppManifest | null;
 
     useEffect(() => {
         const subscription = manifestProvider.loadApps()
@@ -29,11 +33,15 @@ function Wrapper() {
         return () => subscription.unsubscribe();
     }, [])
 
+    const activateApp = (container: HTMLElement, appManifest: AppManifest | null) => {
+        manifestProvider.switchApps(container, prevActiveApp, appManifest);
+    };
+
     return (
     <div className="app">
         <ManifestProviderContext.Provider value={manifestProvider}>
-            <Header className="app__header" availableApps={availableApps} setActiveApp={manifestProvider.setActive}/>
-            <Content className="app__content"/>
+            <Header className="app__header" availableApps={availableApps} activeApp={activeApp} setActiveApp={setActiveApp}/>
+            <Content activeApp={activeApp} activateApp={activateApp} className="app__content"/>
             <div className="app__footer">footer</div>
         </ManifestProviderContext.Provider>
     </div>

@@ -1,37 +1,18 @@
-import React, {useContext, useEffect, useState} from "react";
-import {AppManifest, ManifestProviderContext} from "../manifest/ManifestProvider";
+import React, {useEffect} from "react";
+import {AppManifest} from "../manifest/ManifestProvider";
 import './Content.scss';
-import {usePrevious} from "../utils/PreviousHook";
 
 function Content(props: ContentProps) {
-    const manifestProvider = useContext(ManifestProviderContext)
-    const [activeApp, setActiveApp] = useState<null | AppManifest>(null);
-    const prevApp = usePrevious(activeApp);
-
     useEffect(() => {
-        const subscription = manifestProvider.getActive$()
-            .subscribe(newActiveApp => {
-                setActiveApp(newActiveApp);
-            });
-        return () => subscription.unsubscribe();
-    }, [])
-
-    useEffect(() => {
-        const contentBox = document.getElementById('content-box');
-        if(prevApp) {
-            contentBox!.innerHTML = '';
-            (window as any).MICRO_FRONTEND_WRAPPER[prevApp.appId][prevApp.version].destroy();
-        }
-        if (activeApp) {
-            (window as any).MICRO_FRONTEND_WRAPPER[activeApp.appId][activeApp.version].init(contentBox);
-        }
-    }, [activeApp])
+        const contentBox = document.getElementById('content-box')!;
+        props.activateApp(contentBox, props.activeApp);
+    });
 
     return <div className="content-wrapper">
         {
-            activeApp
+            props.activeApp
                 ? <div className={props.className}>
-                    {activeApp?.appName} is active!
+                    {props.activeApp?.appName} is active!
                 </div>
                 : <div>No app is active</div>
         }
@@ -42,6 +23,8 @@ function Content(props: ContentProps) {
 
 export type ContentProps = {
     className?: string
+    activeApp: AppManifest | null
+    activateApp: (container: HTMLElement, appManifest: AppManifest | null) => void;
 }
 
 export default Content;
