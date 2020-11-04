@@ -3,7 +3,9 @@
     const version = '0.3.0';
 
     const createApp = () => {
-        return `<div>hello, I'm ${appId} version ${version}</div>`;
+        const content = document.createElement('div');
+        content.append(`hello, I'm ${appId} version ${version}`);
+        return content;
     }
 
     if(!window.MICRO_FRONTEND_WRAPPER) {
@@ -16,7 +18,7 @@
     }
     window.MICRO_FRONTEND_WRAPPER[appId][version] = {
         init: container => {
-            document.getElementById(container).append(createApp());
+            container.append(createApp());
         },
         destroy: () => {}
     };

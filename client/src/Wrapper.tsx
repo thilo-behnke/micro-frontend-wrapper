@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import "./App.scss";
+import "./Wrapper.scss";
 import {
     DefaultManifestProvider,
     AppManifest,

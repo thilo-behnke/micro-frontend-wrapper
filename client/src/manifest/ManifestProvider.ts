@@ -6,6 +6,7 @@ import {fromFetch} from "rxjs/fetch";
 export type AppManifest = {
     appId: string;
     appName: string;
+    version: string;
     url: string;
 }
 
