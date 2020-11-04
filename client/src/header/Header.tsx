@@ -1,5 +1,5 @@
 import React from "react";
-import {Manifest} from "../manifest/ManifestProvider";
+import {AppManifest} from "../manifest/ManifestProvider";
 
 function Header(props: HeaderProps) {
     return <div className={props.className}> {props.availableApps.map(app => <button onClick={() => props.setActiveApp(app.appId)}
@@ -7,7 +7,7 @@ function Header(props: HeaderProps) {
 }
 
 export type HeaderProps = {
-    availableApps: Manifest[];
+    availableApps: AppManifest[];
     setActiveApp: (appId: string) => void;
     className?: string;
 }

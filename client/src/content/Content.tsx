@@ -1,9 +1,9 @@
 import React, {useContext, useEffect, useState} from "react";
-import {Manifest, ManifestProviderContext} from "../manifest/ManifestProvider";
+import {AppManifest, ManifestProviderContext} from "../manifest/ManifestProvider";
 
 function Content(props: ContentProps) {
     const manifestProvider = useContext(ManifestProviderContext)
-    const [activeApp, setActiveApp] = useState<null | Manifest>(null);
+    const [activeApp, setActiveApp] = useState<null | AppManifest>(null);
 
     useEffect(() => {
         const subscription = manifestProvider.getActive$()

@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import Wrapper from './Wrapper';
 import reportWebVitals from './reportWebVitals';
+
+if(!window.MICRO_FRONTEND_WRAPPER) {
+    window.MICRO_FRONTEND_WRAPPER = {};
+}
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Wrapper />
   </React.StrictMode>,
   document.getElementById('root')
 );
