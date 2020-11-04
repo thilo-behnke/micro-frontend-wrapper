@@ -1,0 +1,16 @@
+micronaut:
+  application:
+    name: server
+  server:
+    cors:
+      enabled: true
+      configurations:
+        web:
+          allowedOrigins:
+            - "http://micro-frontend.whos-coding.com"
+  router:
+    static-resources:
+      default:
+        enabled: true
+        mapping: "/assets/**"
+        paths: "classpath:public"
