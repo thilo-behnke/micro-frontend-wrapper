@@ -5,8 +5,7 @@ import {shareReplay, tap} from "rxjs/operators";
 export type Manifest = {
     appId: string;
     appName: string;
-    init?: (args: InitArgs) => void;
-    destroy?: (args: DestroyArgs) => void;
+    url: string;
 }
 
 export type InitArgs = {
