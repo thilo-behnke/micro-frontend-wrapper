@@ -8,18 +8,20 @@
         return content;
     }
 
-    if(!window.MICRO_FRONTEND_WRAPPER) {
-        console.error(`Missing window property MICRO_FRONTEND_WRAPPER, cannot register app ${appId} version ${version}.`);
+    if(!window.MICRO_FRONTEND_WRAPPER || !window.MICRO_FRONTEND_WRAPPER.MANIFEST_REGISTRY) {
+        console.error(`Missing window property in MICRO_FRONTEND_WRAPPER, cannot register app ${appId} version ${version}.`);
         return;
     }
 
-    if(!window.MICRO_FRONTEND_WRAPPER[appId]) {
-        window.MICRO_FRONTEND_WRAPPER[appId] = {};
-    }
-    window.MICRO_FRONTEND_WRAPPER[appId][version] = {
+    window.MICRO_FRONTEND_WRAPPER.MANIFEST_REGISTRY.register({
+        appId,
+        version,
         init: container => {
             container.append(createApp());
+            return Promise.resolve();
         },
-        destroy: () => {}
-    };
+        destroy: () => {
+            return Promise.resolve();
+        }
+    })
 })()

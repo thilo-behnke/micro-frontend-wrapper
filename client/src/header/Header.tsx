@@ -1,8 +1,8 @@
 import React from "react";
-import { AppManifest } from "../manifest/ManifestProvider";
 import { Button, Spinner } from "react-bootstrap";
 import classNames from "classnames";
 import "./Header.scss";
+import { AppManifest } from "../manifest/AppManifest";
 
 function Header(props: HeaderProps) {
   return (
