@@ -13,6 +13,7 @@ import {
 import { fromFetch } from "rxjs/fetch";
 import { AppManifest, Backend } from "./AppManifest";
 import { AppRegistry } from "./AppRegistry";
+import { ServiceRegistryHandler } from "../serviceRegistry/ServiceRegistryHandler";
 
 export interface AppManifestHandler {
   loadApps: () => Observable<AppManifest[]>;
@@ -24,10 +25,13 @@ export interface AppManifestHandler {
 }
 
 export class DefaultAppManifestHandler implements AppManifestHandler {
-  constructor(private appRegistry: AppRegistry) {}
+  constructor(
+    private appRegistry: AppRegistry,
+    private serviceRegistryHandler: ServiceRegistryHandler
+  ) {}
 
   loadApps = () => {
-    return fromFetch("/api/manifests").pipe(
+    return fromFetch("/manifest-api/manifests").pipe(
       switchMap((res) => res.json()),
       tap((apps: AppManifest[]) => {
         // TODO: Handle deregistration case.
@@ -46,7 +50,15 @@ export class DefaultAppManifestHandler implements AppManifestHandler {
               ? of([])
               : backends.map(
                   (backend: Backend): Observable<Backend> =>
-                    of({ ...backend, serviceUrl: "http://my-service" })
+                    // TODO: Handle errors.
+                    this.serviceRegistryHandler
+                      .getService(backend.id, backend.version)
+                      .pipe(
+                        map((service) => ({
+                          ...backend,
+                          serviceUrl: service.url,
+                        }))
+                      )
                 );
             return forkJoin(backendsWithUrl).pipe(
               map(

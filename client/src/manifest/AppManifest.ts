@@ -7,9 +7,9 @@ export type AppManifest = {
 };
 
 export type Backend = {
-  id: String;
-  name: String;
-  version: String;
+  id: string;
+  name: string;
+  version: string;
   // TODO: This is optional until the service registry was queried - improve typing.
-  serviceUrl?: String;
+  serviceUrl?: string;
 };

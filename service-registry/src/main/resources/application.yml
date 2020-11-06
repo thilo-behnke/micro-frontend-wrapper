@@ -1,3 +1,5 @@
 micronaut:
   application:
     name: serviceRegistry
+  server:
+    port: 8090

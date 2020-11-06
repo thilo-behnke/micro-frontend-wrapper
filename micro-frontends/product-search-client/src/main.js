@@ -2,7 +2,7 @@ import App from './App.svelte';
 
 (() => {
 	const appId = 'product-search-app';
-	const version = '2.0.1';
+	const version = '1.0.0';
 
 	const createApp = ({container, backends}) => {
 		new App({
