@@ -21,3 +21,10 @@ services:
       - .env
     ports:
       - "8080:8080"
+  service-registry:
+    build:
+      context: ./server
+    env_file:
+      - .env
+    ports:
+      - "8090:8080"
