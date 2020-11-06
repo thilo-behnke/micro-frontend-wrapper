@@ -2,8 +2,9 @@ import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
-import { terser } from 'rollup-plugin-terser';
+import {terser} from 'rollup-plugin-terser';
 
+const packageJson = require('./package.json');
 const production = !process.env.ROLLUP_WATCH;
 
 function serve() {
@@ -32,8 +33,8 @@ export default {
 	output: {
 		sourcemap: true,
 		format: 'iife',
-		name: 'app',
-		file: 'public/build/bundle.js'
+		dir: 'public/build',
+		entryFileNames: `${packageJson.name}__${packageJson.version}.js`
 	},
 	plugins: [
 		svelte({
@@ -42,10 +43,9 @@ export default {
 			// we'll extract any component CSS out into
 			// a separate file - better for performance
 			css: css => {
-				css.write('bundle.css');
+				css.write(`${packageJson.name}__${packageJson.version}.css`);
 			}
 		}),
-
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In
 		// some cases you'll need additional configuration -
