@@ -41,6 +41,7 @@ export class DefaultAppManifestHandler implements AppManifestHandler {
       mergeMap((apps: AppManifest[]) => {
         const appsWithBackends = apps.map(
           ({ backends, ...rest }): Observable<AppManifest> => {
+            // TODO: Ideally this should not be done right away, but when the apps are loaded. This is not important until the app is actually used.
             const backendsWithUrl = !backends.length
               ? of([])
               : backends.map(
