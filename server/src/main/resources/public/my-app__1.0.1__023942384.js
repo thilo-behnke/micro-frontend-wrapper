@@ -16,7 +16,7 @@
     window.MICRO_FRONTEND_WRAPPER.MANIFEST_REGISTRY.register({
         appId,
         version,
-        init: container => {
+        init: ({container}) => {
             container.append(createApp());
             return Promise.resolve();
         },

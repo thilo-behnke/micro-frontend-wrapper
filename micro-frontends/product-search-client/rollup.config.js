@@ -31,7 +31,7 @@ function serve() {
 export default {
 	input: 'src/main.js',
 	output: {
-		sourcemap: true,
+		sourcemap: false,
 		format: 'iife',
 		dir: 'public/build',
 		entryFileNames: `${packageJson.name}__${packageJson.version}.js`

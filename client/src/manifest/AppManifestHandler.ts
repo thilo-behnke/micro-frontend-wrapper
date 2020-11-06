@@ -52,7 +52,10 @@ export class DefaultAppManifestHandler implements AppManifestHandler {
         );
         return;
       }
-      await newAppReg!.init(contentBox!);
+      await newAppReg!.init({
+        container: contentBox!,
+        backends: newApp.backends,
+      });
     }
   }
 }

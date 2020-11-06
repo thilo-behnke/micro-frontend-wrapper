@@ -69,11 +69,3 @@ tasks.withType(JavaExec) {
         )
     }
 }
-
-// TODO: Why is this needed?
-task prepareKotlinBuildScriptModel {
-
-}
-
-
-
