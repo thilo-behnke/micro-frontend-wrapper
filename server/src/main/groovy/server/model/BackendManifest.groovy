@@ -7,5 +7,4 @@ class BackendManifest {
     String id
     String name
     String version
-    String serviceUrl
 }

@@ -1,8 +1,17 @@
 import { Context, createContext } from "react";
-import { Observable, of } from "rxjs";
-import { shareReplay, switchMap } from "rxjs/operators";
+import { forkJoin, Observable, of } from "rxjs";
+import {
+  concatAll,
+  map,
+  mergeAll,
+  mergeMap,
+  reduce,
+  shareReplay,
+  switchMap,
+  tap,
+} from "rxjs/operators";
 import { fromFetch } from "rxjs/fetch";
-import { AppManifest } from "./AppManifest";
+import { AppManifest, Backend } from "./AppManifest";
 import { AppRegistry } from "./AppRegistry";
 
 export interface AppManifestHandler {
@@ -20,6 +29,36 @@ export class DefaultAppManifestHandler implements AppManifestHandler {
   loadApps = () => {
     return fromFetch("/api/manifests").pipe(
       switchMap((res) => res.json()),
+      tap((apps: AppManifest[]) => {
+        // TODO: Handle deregistration case.
+        apps.forEach(({ url }) => {
+          const script = document.createElement("script");
+          script.src = url;
+          script.async = true;
+          document.body.append(script);
+        });
+      }),
+      mergeMap((apps: AppManifest[]) => {
+        const appsWithBackends = apps.map(
+          ({ backends, ...rest }): Observable<AppManifest> => {
+            const backendsWithUrl = !backends.length
+              ? of([])
+              : backends.map(
+                  (backend: Backend): Observable<Backend> =>
+                    of({ ...backend, serviceUrl: "http://my-service" })
+                );
+            return forkJoin(backendsWithUrl).pipe(
+              map(
+                (newBackends: Backend[]): AppManifest => ({
+                  backends: newBackends,
+                  ...rest,
+                })
+              )
+            );
+          }
+        );
+        return forkJoin(appsWithBackends);
+      }),
       shareReplay(1)
     );
   };

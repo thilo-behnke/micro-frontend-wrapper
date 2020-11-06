@@ -18,9 +18,7 @@ class ManifestController {
                         new BackendManifest(
                                 id: 'product-search-api',
                                 name: 'Product Search Api',
-                                version: '1.0.0',
-                                // TODO: This only works with docker, make configurable.
-                                serviceUrl: 'http://product-search/api/'
+                                version: '1.0.0'
                         )
                 ])
         ]
