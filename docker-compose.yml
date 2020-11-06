@@ -23,7 +23,7 @@ services:
       - "8080:8080"
   service-registry:
     build:
-      context: ./server
+      context: ./service-registry
     env_file:
       - .env
     ports:
