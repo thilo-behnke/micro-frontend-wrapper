@@ -28,4 +28,4 @@ services:
     env_file:
       - .env
     ports:
-      - "8090:8080"
+      - "8090:8090"

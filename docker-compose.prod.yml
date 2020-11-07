@@ -25,3 +25,8 @@ services:
       context: ./service-registry
     env_file:
       - .env-production
+    depends_on:
+      - service-registry-mongo
+  service-registry-mongo:
+    image: mongo:latest
+

@@ -17,16 +17,16 @@ class FileServiceRegistryService implements ServiceRegistryService {
     @Override
     Optional<Service> getService(String id, String version) {
         def services = loadServices()
-        def matchingService = services.find {it.id == id && it.version == version}
+        def matchingService = services.find {it.id == id && it.serviceVersion == version}
         return Optional.ofNullable(matchingService)
     }
 
     @Override
     void registerService(Service service) throws ServiceAlreadyRegisteredException {
         def services = loadServices()
-        def existingService = services.find {it.id == service.id && it.version == service.version}
+        def existingService = services.find {it.id == service.id && it.serviceVersion == service.serviceVersion}
         if(existingService) {
-            throw new ServiceAlreadyRegisteredException(service.id, service.version)
+            throw new ServiceAlreadyRegisteredException(service.id, service.serviceVersion)
         }
         services.add(service)
         saveServices(services)

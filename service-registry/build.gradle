@@ -27,6 +27,8 @@ dependencies {
     implementation("io.micronaut:micronaut-http-server-netty")
     implementation("io.micronaut:micronaut-http-client")
     compile group: 'org.codehaus.groovy', name: 'groovy-json', version: '2.0.1'
+    implementation("io.micronaut.mongodb:micronaut-mongo-reactive")
+    implementation("io.micronaut.groovy:micronaut-mongo-gorm")
 
     runtimeOnly("ch.qos.logback:logback-classic")
     testImplementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
