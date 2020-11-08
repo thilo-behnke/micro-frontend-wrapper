@@ -14,3 +14,4 @@ micronaut:
         enabled: true
         mapping: "/assets/**"
         paths: "classpath:public"
+mongodb.uri: mongodb://server-mongo:27017
