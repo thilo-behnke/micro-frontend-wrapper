@@ -16,7 +16,9 @@ if [ $? -eq 0 ]; then
     exit $?
 fi
 
-ssh $SERVER_USER@$SERVER_URL DOCKER_REGISTRY=$DOCKER_REGISTRY 'bash -s' < scripts/redeploy-containers.sh
+RESULT=$(ssh $SERVER_USER@$SERVER_URL DOCKER_REGISTRY=$DOCKER_REGISTRY 'bash -s' < scripts/redeploy-containers.sh)
+echo $RESULT
+echo $?
 if [ $? -eq 0 ]; then
     echo "Successfully redeployed containers."
   else
