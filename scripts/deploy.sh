@@ -9,6 +9,7 @@ echo "Deploying onto server $SERVER_URL with user $SERVER_USER"
 
 scp .env-production $SERVER_USER@$SERVER_URL:/home/build/
 if [ $? -eq 0 ]; then
+    echo "Exit code: $?"
     echo "ERROR on copying env file"
     exit $?
 fi
