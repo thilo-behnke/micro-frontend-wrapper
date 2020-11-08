@@ -15,7 +15,7 @@ fi
 
 ssh $SERVER_USER@$SERVER_URL DOCKER_REGISTRY=$DOCKER_REGISTRY 'bash -s' < scripts/redeploy-containers.sh
 if [ $? -eq 0 ]; then
-    echo $?
+    echo "Exit code: $?"
     echo "ERROR on redeploying containers"
     exit $?
 fi
