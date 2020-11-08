@@ -15,6 +15,10 @@ docker tag microfrontend_service-registry $DOCKER_REGISTRY/micro_frontend_wrappe
 docker tag microfrontend_service-registry $DOCKER_REGISTRY/micro_frontend_wrapper_service_registry:$BUILD_NUMBER
 docker push $DOCKER_REGISTRY/micro_frontend_wrapper_service_registry
 
+docker tag microfrontend_service-registry-mongo $DOCKER_REGISTRY/micro_frontend_wrapper_service_registry_mongo:latest
+docker tag microfrontend_service-registry-mongo $DOCKER_REGISTRY/micro_frontend_wrapper_service_registry_mongo:$BUILD_NUMBER
+docker push $DOCKER_REGISTRY/micro_frontend_wrapper_service_registry_mongo
+
 docker tag microfrontend_client $DOCKER_REGISTRY/micro_frontend_wrapper_client:latest
 docker tag microfrontend_client $DOCKER_REGISTRY/micro_frontend_wrapper_client:$BUILD_NUMBER
 docker push $DOCKER_REGISTRY/micro_frontend_wrapper_client
