@@ -1,4 +1,5 @@
 import { areAppDefinitionsEqual } from "./ManifestUtils";
+import { Backend } from "./AppManifest";
 
 export interface AppRegistry {
   register(appDef: MicroFrontendAppDefinition): void;
@@ -6,8 +7,13 @@ export interface AppRegistry {
   getApp(appId: string, version: string): MicroFrontendAppDefinition | null;
 }
 
-export type InitFunc = (elem: HTMLElement) => Promise<void>;
+export type InitFunc = (args: InitArgs) => Promise<void>;
 export type DestroyFunc = () => Promise<void>;
+
+export type InitArgs = {
+  container: HTMLElement;
+  backends: Backend[];
+};
 
 export type MicroFrontendAppDefinition = {
   appId: string;

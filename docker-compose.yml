@@ -10,6 +10,7 @@ services:
       - .env
     depends_on:
       - server
+      - service-registry
     ports:
       - "80:80"
   server:
@@ -21,3 +22,16 @@ services:
       - .env
     ports:
       - "8080:8080"
+  service-registry:
+    build:
+      context: ./service-registry
+    env_file:
+      - .env
+    depends_on:
+      - service-registry-mongo
+    ports:
+      - "8090:8090"
+  service-registry-mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"

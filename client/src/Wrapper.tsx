@@ -23,12 +23,6 @@ function Wrapper() {
       .loadApps()
       .subscribe((apps: AppManifest[]) => {
         setAvailableApps(apps);
-        apps.forEach(({ url }) => {
-          const script = document.createElement("script");
-          script.src = url;
-          script.async = true;
-          document.body.append(script);
-        });
         setLoading(false);
       });
     return () => subscription.unsubscribe();

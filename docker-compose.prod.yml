@@ -10,6 +10,7 @@ services:
       - .env-production
     depends_on:
       - server
+      - service-registry
     ports:
       - "80:80"
   server:
@@ -19,3 +20,13 @@ services:
         - CLIENT_URL=$CLIENT_URL
     env_file:
       - .env-production
+  service-registry:
+    build:
+      context: ./service-registry
+    env_file:
+      - .env-production
+    depends_on:
+      - service-registry-mongo
+  service-registry-mongo:
+    image: mongo:latest
+

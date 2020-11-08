@@ -1,9 +1,19 @@
 import { Context, createContext } from "react";
-import { Observable, of } from "rxjs";
-import { shareReplay, switchMap } from "rxjs/operators";
+import { forkJoin, Observable, of } from "rxjs";
+import {
+  concatAll,
+  map,
+  mergeAll,
+  mergeMap,
+  reduce,
+  shareReplay,
+  switchMap,
+  tap,
+} from "rxjs/operators";
 import { fromFetch } from "rxjs/fetch";
-import { AppManifest } from "./AppManifest";
+import { AppManifest, Backend } from "./AppManifest";
 import { AppRegistry } from "./AppRegistry";
+import { ServiceRegistryHandler } from "../serviceRegistry/ServiceRegistryHandler";
 
 export interface AppManifestHandler {
   loadApps: () => Observable<AppManifest[]>;
@@ -15,11 +25,53 @@ export interface AppManifestHandler {
 }
 
 export class DefaultAppManifestHandler implements AppManifestHandler {
-  constructor(private appRegistry: AppRegistry) {}
+  constructor(
+    private appRegistry: AppRegistry,
+    private serviceRegistryHandler: ServiceRegistryHandler
+  ) {}
 
   loadApps = () => {
-    return fromFetch("/api/manifests").pipe(
+    return fromFetch("/manifest-api/manifests").pipe(
       switchMap((res) => res.json()),
+      tap((apps: AppManifest[]) => {
+        // TODO: Handle deregistration case.
+        apps.forEach(({ url }) => {
+          const script = document.createElement("script");
+          script.src = url;
+          script.async = true;
+          document.body.append(script);
+        });
+      }),
+      mergeMap((apps: AppManifest[]) => {
+        const appsWithBackends = apps.map(
+          ({ backends, ...rest }): Observable<AppManifest> => {
+            // TODO: Ideally this should not be done right away, but when the apps are loaded. This is not important until the app is actually used.
+            const backendsWithUrl = !backends.length
+              ? of([])
+              : backends.map(
+                  (backend: Backend): Observable<Backend> =>
+                    // TODO: Handle errors.
+                    this.serviceRegistryHandler
+                      .getService(backend.id, backend.version)
+                      .pipe(
+                        map((service) => ({
+                          ...backend,
+                          serviceUrl: service.url,
+                        }))
+                      )
+                );
+            return forkJoin(backendsWithUrl).pipe(
+              map(
+                (newBackends: Backend[]): AppManifest => ({
+                  backends: newBackends,
+                  ...rest,
+                })
+              )
+            );
+          }
+        );
+        return forkJoin(appsWithBackends);
+      }),
       shareReplay(1)
     );
   };
@@ -52,7 +104,10 @@ export class DefaultAppManifestHandler implements AppManifestHandler {
         );
         return;
       }
-      await newAppReg!.init(contentBox!);
+      await newAppReg!.init({
+        container: contentBox!,
+        backends: newApp.backends,
+      });
     }
   }
 }

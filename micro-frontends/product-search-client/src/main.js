@@ -2,13 +2,13 @@ import App from './App.svelte';
 
 (() => {
 	const appId = 'product-search-app';
-	const version = '2.0.1';
+	const version = '1.0.0';
 
-	const createApp = (container) => {
+	const createApp = ({container, backends}) => {
 		new App({
 			target: container,
 			props: {
-				name: 'world'
+				backends
 			}
 		});
 	}
@@ -21,8 +21,8 @@ import App from './App.svelte';
 	window.MICRO_FRONTEND_WRAPPER.MANIFEST_REGISTRY.register({
 		appId,
 		version,
-		init: container => {
-			createApp(container);
+		init: (args) => {
+			createApp(args);
 			return Promise.resolve();
 		},
 		destroy: () => {

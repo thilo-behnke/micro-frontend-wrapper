@@ -7,3 +7,6 @@ micronaut:
         enabled: true
         mapping: "/assets/**"
         paths: "classpath:public"
+
+jackson:
+  serializationInclusion: ALWAYS

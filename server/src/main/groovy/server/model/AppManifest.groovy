@@ -3,9 +3,11 @@ package server.model
 import groovy.transform.Immutable
 
 @Immutable
-class Manifest {
+class AppManifest {
     String appId
     String appName
     String version
     String url
+
+    List<BackendManifest> backends = []
 }

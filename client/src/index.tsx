@@ -14,6 +14,10 @@ import {
   DefaultWindowProvider,
   WindowProvider,
 } from "./browser/WindowProvider";
+import {
+  DefaultServiceRegistryHandler,
+  ServiceRegistryHandler,
+} from "./serviceRegistry/ServiceRegistryHandler";
 
 const manifestRegistry: AppRegistry = new DefaultAppRegistry();
 const windowProvider: WindowProvider = new DefaultWindowProvider(
@@ -21,8 +25,10 @@ const windowProvider: WindowProvider = new DefaultWindowProvider(
 );
 windowProvider.init();
 
+const serviceRegistryHandler: ServiceRegistryHandler = new DefaultServiceRegistryHandler();
 const appManifestHandler: AppManifestHandler = new DefaultAppManifestHandler(
-  manifestRegistry
+  manifestRegistry,
+  serviceRegistryHandler
 );
 
 ReactDOM.render(
