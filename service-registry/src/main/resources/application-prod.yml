@@ -3,4 +3,4 @@ micronaut:
     name: serviceRegistry
   server:
     port: 8090
-mongodb.uri: mongodb://service-registry-mongo:27017
+mongodb.uri: mongodb://service_registry_mongo:27017

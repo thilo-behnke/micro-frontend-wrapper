@@ -28,5 +28,6 @@ services:
     depends_on:
       - service-registry-mongo
   service-registry-mongo:
-    image: mongo:latest
+    build:
+      context: ./service-registry-mongo
 
