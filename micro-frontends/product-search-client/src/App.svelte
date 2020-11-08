@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
 	export let backends;
 </script>
 
-<main>
+<main class="test">
 	{#if backends.length}
        App has {backends.length} {backends.length > 1 ? 'backends' : 'backend'}:
         <ul>
@@ -14,4 +14,7 @@
 </main>
 
 <style>
+	.test {
+		margin-right: 10px;
+	}
 </style>
