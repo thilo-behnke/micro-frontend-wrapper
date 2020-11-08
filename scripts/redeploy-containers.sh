@@ -5,7 +5,7 @@ set -u
 
 echo "Using docker registry: $DOCKER_REGISTRY"
 
-(docker stop server && docker rm server && false) || (docker stop client && docker rm client && false) || true
+(docker stop server && docker rm server && docker rm service_registry &&  false) || (docker stop client && docker rm client && docker rm service_registry && false) || true
 
 docker network create 'app-net' || true
 
