@@ -1,7 +1,8 @@
-package service.registry.exception
+package service.registry.service
 
 import grails.gorm.transactions.Transactional
 import io.micronaut.context.annotation.Requires
+import service.registry.exception.ServiceAlreadyRegisteredException
 import service.registry.model.Service
 import service.registry.service.ServiceRegistryService
 

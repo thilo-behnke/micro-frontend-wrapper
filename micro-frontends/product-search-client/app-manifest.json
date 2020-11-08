@@ -1,0 +1,11 @@
+{
+  "appId": "product-search-app",
+  "appName": "Product Search",
+  "version": "$version",
+  "backends": [
+    {
+      "id": "product-search-api",
+      "version": "1.0.0"
+    }
+  ]
+}

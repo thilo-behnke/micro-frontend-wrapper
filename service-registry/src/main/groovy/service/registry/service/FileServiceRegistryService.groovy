@@ -1,8 +1,9 @@
-package service.registry.exception
+package service.registry.service
 
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import io.micronaut.context.annotation.Requires
+import service.registry.exception.ServiceAlreadyRegisteredException
 import service.registry.model.Service
 import service.registry.service.ServiceRegistryService
 
