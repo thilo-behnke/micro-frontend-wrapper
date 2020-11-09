@@ -10,6 +10,8 @@
 				<div>{backend.name}: {backend.serviceUrl}</div>
 			{/each}
 		</ul>
+		{:else}
+        App has not registered any backends.
 	{/if}
 </main>
 
