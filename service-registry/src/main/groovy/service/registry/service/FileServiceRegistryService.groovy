@@ -5,7 +5,6 @@ import groovy.json.JsonSlurper
 import io.micronaut.context.annotation.Requires
 import service.registry.exception.ServiceAlreadyRegisteredException
 import service.registry.model.Service
-import service.registry.service.ServiceRegistryService
 
 import javax.inject.Singleton
 
@@ -18,16 +17,16 @@ class FileServiceRegistryService implements ServiceRegistryService {
     @Override
     Optional<Service> getService(String id, String version) {
         def services = loadServices()
-        def matchingService = services.find {it.id == id && it.serviceVersion == version}
+        def matchingService = services.find {it.serviceId == id && it.serviceVersion == version}
         return Optional.ofNullable(matchingService)
     }
 
     @Override
     void registerService(Service service) throws ServiceAlreadyRegisteredException {
         def services = loadServices()
-        def existingService = services.find {it.id == service.id && it.serviceVersion == service.serviceVersion}
+        def existingService = services.find {it.serviceId == service.serviceId && it.serviceVersion == service.serviceVersion}
         if(existingService) {
-            throw new ServiceAlreadyRegisteredException(service.id, service.serviceVersion)
+            throw new ServiceAlreadyRegisteredException(service.serviceId, service.serviceVersion)
         }
         services.add(service)
         saveServices(services)

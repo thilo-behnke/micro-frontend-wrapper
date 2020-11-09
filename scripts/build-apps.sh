@@ -3,10 +3,13 @@
 set -e
 set -u
 : "$APP_REGISTRY_URL"
+: "$SERVICE_REGISTRY_URL"
 : "$S3_URL"
+: "$DOCKER_REGISTRY"
 
-echo "Using app registry with url $APP_REGISTRY_URL."
-echo "Using s3 storage with url $S3_URL."
+echo "Using docker registry: $DOCKER_REGISTRY"
+echo "Using app registry: $APP_REGISTRY_URL."
+echo "Using s3 storage: $S3_URL."
 
 # Register micro frontend.
 
@@ -26,8 +29,8 @@ curl -X POST -H "Content-Type: application/json" -d json $APP_REGISTRY_URL/manif
 
 cd ../product-search-backend
 
-# TODO: Build as docker container - easy.
-# TODO: Push docker container into registry - would have to be created manually at this point.
-# TODO: Run docker container on server - would have to be created manually at this point.
-# TODO: Register service at service registry - easy.
+docker build -t $DOCKER_REGISTRY/micro_frontend_wrapper_product_search_backend:$BUILD_NUMBER -t $DOCKER_REGISTRY/micro_frontend_wrapper_product_search_backend:latest .
+docker push $DOCKER_REGISTRY/micro_frontend_wrapper_product_search_backend
+# TODO: Deploy docker container onto server.
+curl -X POST -H "Content-Type: application/json" -d service-manifest.json $SERVICE_REGISTRY_URL/service-registry-api/services
 

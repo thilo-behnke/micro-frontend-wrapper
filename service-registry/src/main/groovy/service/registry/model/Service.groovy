@@ -4,17 +4,17 @@ import grails.gorm.annotation.Entity
 
 @Entity
 class Service {
-    String id
+    String serviceId
     String serviceVersion
-    String url
+    String serviceUrl
 
     static mapping = {
         collection "services"
     }
 
     static constraints = {
-        id nullable: false, blank: false
+        serviceId nullable: false, blank: false
         serviceVersion nullable: false, blank: false
-        url nullable: false, blank: false
+        serviceUrl nullable: false, blank: false
     }
 }
