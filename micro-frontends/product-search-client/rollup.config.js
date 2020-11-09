@@ -11,6 +11,53 @@ import copy from 'rollup-plugin-copy'
 const packageJson = require('./package.json');
 const production = !process.env.ROLLUP_WATCH;
 
+
+const template = async ({ attributes, files, meta, publicPath, title }) => {
+	const scripts = (files.js || [])
+		.map(({ fileName }) => {
+			const attrs = makeHtmlAttributes(attributes.script);
+			return `<script src="${publicPath}${fileName}"${attrs}></script>`;
+		})
+		.join('\n');
+
+	const links = (files.css || [])
+		.map(({ fileName }) => {
+			const attrs = makeHtmlAttributes(attributes.link);
+			return `<link href="${publicPath}${fileName}" rel="stylesheet"${attrs}>`;
+		})
+		.join('\n');
+
+	const metas = meta
+		.map((input) => {
+			const attrs = makeHtmlAttributes(input);
+			return `<meta${attrs}>`;
+		})
+		.join('\n');
+
+	return `
+<!doctype html>
+<html${makeHtmlAttributes(attributes.html)}>
+  <head>
+    ${metas}
+    <title>${title}</title>
+    ${links}
+  </head>
+  <body>
+    ${scripts}
+  </body>
+</html>`;
+};
+
+const makeHtmlAttributes = (attributes) => {
+	if (!attributes) {
+		return '';
+	}
+
+	const keys = Object.keys(attributes);
+	// eslint-disable-next-line no-param-reassign
+	return keys.reduce((result, key) => (result += ` ${key}="${attributes[key]}"`), '');
+};
+
 function serve() {
 	let server;
 	
@@ -61,10 +108,12 @@ export default {
 			dedupe: ['svelte']
 		}),
 		commonjs(),
-        html(),
+        html({template}),
 		copy({
 			targets: [
-				{ src: "app-manifest.json", dest: "public/build", transform: contents => contents.toString().replace('__version__', packageJson.version) }
+				{ src: "app-manifest.json", dest: "public/build", transform: contents => contents.toString().replace('__version__', packageJson.version) },
+				{ src: "public/global.css", dest: "public/build", transform: contents => contents.toString().replace('__version__', packageJson.version) },
+				{ src: "public/favicon.pgn", dest: "public/build", transform: contents => contents.toString().replace('__version__', packageJson.version) },
 			]
 		}),
 		typescript({
