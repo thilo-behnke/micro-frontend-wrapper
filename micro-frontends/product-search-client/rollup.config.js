@@ -34,6 +34,9 @@ const template = async ({ attributes, files, meta, publicPath, title }) => {
 		})
 		.join('\n');
 
+	const favicon = '<link rel="icon" type="image/x-icon" href="/favicon.png">'
+	const globalCss = ' <link href="global.css" rel="stylesheet">';
+
 	return `
 <!doctype html>
 <html${makeHtmlAttributes(attributes.html)}>
@@ -41,6 +44,8 @@ const template = async ({ attributes, files, meta, publicPath, title }) => {
     ${metas}
     <title>${title}</title>
     ${links}
+    ${globalCss}
+    ${favicon}
   </head>
   <body>
     ${scripts}
@@ -112,8 +117,8 @@ export default {
 		copy({
 			targets: [
 				{ src: "app-manifest.json", dest: "public/build", transform: contents => contents.toString().replace('__version__', packageJson.version) },
-				{ src: "public/global.css", dest: "public/build", transform: contents => contents.toString().replace('__version__', packageJson.version) },
-				{ src: "public/favicon.pgn", dest: "public/build", transform: contents => contents.toString().replace('__version__', packageJson.version) },
+				{ src: "public/global.css", dest: "public/build" },
+				{ src: "public/favicon.png", dest: "public/build" },
 			]
 		}),
 		typescript({
