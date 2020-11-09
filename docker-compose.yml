@@ -22,6 +22,11 @@ services:
       - .env
     ports:
       - "8080:8080"
+  server-mongo:
+    build:
+      context: ./service-registry-mongo
+    ports:
+      - "27018:27017"
   service-registry:
     build:
       context: ./service-registry

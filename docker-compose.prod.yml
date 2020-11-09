@@ -20,6 +20,9 @@ services:
         - CLIENT_URL=$CLIENT_URL
     env_file:
       - .env-production
+  server-mongo:
+    build:
+      context: ./service-registry-mongo
   service-registry:
     build:
       context: ./service-registry

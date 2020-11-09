@@ -1,13 +1,14 @@
 package server.model
 
+import grails.gorm.annotation.Entity
 import groovy.transform.Immutable
 
-@Immutable
+@Entity
 class AppManifest {
     String appId
     String appName
-    String version
-    String url
+    String appVersion
+    String appUrl
 
     List<BackendManifest> backends = []
 }
