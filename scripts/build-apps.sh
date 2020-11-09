@@ -6,6 +6,7 @@ set -u
 : "$SERVICE_REGISTRY_URL"
 : "$S3_URL"
 : "$DOCKER_REGISTRY"
+: "$PRODUCT_SEARCH_API_SERVER_URL"
 
 echo "Using docker registry: $DOCKER_REGISTRY"
 echo "Using app registry: $APP_REGISTRY_URL."
@@ -25,12 +26,16 @@ json=$(jq -r --arg app_url $app_url '. + {appUrl: $app_url}' public/build/app-ma
 aws s3 cp js_bundle_filename s3://micro-frontend-app-assets
 curl -X POST -H "Content-Type: application/json" -d json $APP_REGISTRY_URL/manifest-api/manifests
 
-# Register micro frontend bff.
+# Deploy and register micro frontend bff.
 
 cd ../product-search-backend
 
 docker build -t $DOCKER_REGISTRY/micro_frontend_wrapper_product_search_backend:$BUILD_NUMBER -t $DOCKER_REGISTRY/micro_frontend_wrapper_product_search_backend:latest .
 docker push $DOCKER_REGISTRY/micro_frontend_wrapper_product_search_backend
-# TODO: Deploy docker container onto server.
+
+ssh $SERVER_USER@$SERVER_URL (docker stop product_search_backend && docker rm product_search_backend && false)
+ssh $SERVER_USER@$SERVER_URL docker pull $DOCKER_REGISTRY/micro_frontend_wrapper_product_search_backend:latest
+ssh $SERVER_USER@$SERVER_URL docker run -d --name product_search_backend $DOCKER_REGISTRY/micro_frontend_wrapper_product_search_backend:latest
+
 curl -X POST -H "Content-Type: application/json" -d service-manifest.json $SERVICE_REGISTRY_URL/service-registry-api/services
 
