@@ -1,7 +1,7 @@
 {
   "appId": "product-search-app",
   "appName": "Product Search",
-  "version": "$version",
+  "version": "__version__",
   "backends": [
     {
       "id": "product-search-api",

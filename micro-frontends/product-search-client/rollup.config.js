@@ -6,7 +6,7 @@ import {terser} from 'rollup-plugin-terser';
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
 import html from '@rollup/plugin-html';
-
+import copy from 'rollup-plugin-copy'
 
 const packageJson = require('./package.json');
 const production = !process.env.ROLLUP_WATCH;
@@ -33,7 +33,7 @@ function serve() {
 }
 
 export default {
-	input: 'src/main.ts',
+	input: ['src/main.ts'],
 	output: {
 		sourcemap: false,
 		format: 'iife',
@@ -62,6 +62,11 @@ export default {
 		}),
 		commonjs(),
         html(),
+		copy({
+			targets: [
+				{ src: "app-manifest.json", dest: "public/build", transform: contents => contents.toString().replace('__version__', packageJson.version) }
+			]
+		}),
 		typescript({
 			sourceMap: !production,
 			inlineSources: !production
