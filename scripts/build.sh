@@ -6,7 +6,7 @@ set -u
 
 echo "Using docker registry: $DOCKER_REGISTRY"
 
-export $(cat .env-production | xargs) && docker-compose build client server service-registry service-registry-mongo
+export $(cat .env-production | xargs) && docker-compose build client server server-mongo service-registry service-registry-mongo
 
 docker tag microfrontend_server $DOCKER_REGISTRY/micro_frontend_wrapper_server:latest
 docker tag microfrontend_server $DOCKER_REGISTRY/micro_frontend_wrapper_server:$BUILD_NUMBER
