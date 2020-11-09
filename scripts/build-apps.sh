@@ -26,7 +26,8 @@ curl -X POST -H "Content-Type: application/json" -d json $APP_REGISTRY_URL/manif
 
 cd ../product-search-backend
 
-# TODO: Build as docker container.
-# TODO: Push docker container into registry
-# TODO: Register at service registry
+# TODO: Build as docker container - easy.
+# TODO: Push docker container into registry - would have to be created manually at this point.
+# TODO: Run docker container on server - would have to be created manually at this point.
+# TODO: Register service at service registry - easy.
 
