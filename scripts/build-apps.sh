@@ -7,6 +7,7 @@ set -u
 : "$S3_URL"
 : "$DOCKER_REGISTRY"
 : "$PRODUCT_SEARCH_API_SERVER_URL"
+: "$PRODUCT_SEARCH_API_SERVER_USER"
 
 echo "Using docker registry: $DOCKER_REGISTRY"
 echo "Using app registry: $APP_REGISTRY_URL."
