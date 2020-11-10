@@ -10,6 +10,6 @@ class ServiceManifest {
     String serviceVersion
 
     static mapping = {
-        collection "backends"
+        collection "services"
     }
 }

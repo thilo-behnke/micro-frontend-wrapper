@@ -14,7 +14,7 @@ function Header(props: HeaderProps) {
           <Button
             variant={
               app.appId === props.activeApp?.appId &&
-              app.version === props.activeApp?.version
+              app.appVersion === props.activeApp?.appVersion
                 ? "primary"
                 : "secondary"
             }

@@ -6,7 +6,7 @@ export const areManifestsEqual = curry(
   (manifestA: AppManifest, manifestB: AppManifest) => {
     return (
       manifestA.appId === manifestB.appId &&
-      manifestA.version === manifestB.version
+      manifestA.appVersion === manifestB.appVersion
     );
   }
 );

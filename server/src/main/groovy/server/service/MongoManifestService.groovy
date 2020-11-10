@@ -22,6 +22,6 @@ class MongoManifestService implements ManifestService {
         if(existingAppManifest) {
             throw new AppAlreadyRegisteredException(manifest.appId, manifest.appVersion)
         }
-        manifest.insert()
+        manifest.insert(failOnError: true)
     }
 }
