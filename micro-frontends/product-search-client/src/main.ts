@@ -4,11 +4,11 @@ import App from "./App.svelte";
   const appId = "product-search-app";
   const version = "1.0.0";
 
-  const createApp = ({ container, backends }) => {
+  const createApp = ({ container, services }) => {
     new App({
       target: container,
       props: {
-        backends,
+        services,
       },
     });
   };

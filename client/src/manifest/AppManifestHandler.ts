@@ -13,7 +13,7 @@ import {
 import { fromFetch } from "rxjs/fetch";
 import { AppManifest, ServiceManifest } from "./AppManifest";
 import { AppRegistry } from "./AppRegistry";
-import { ServiceRegistryHandler } from "../serviceRegistry/ServiceRegistryHandler";
+import {Service, ServiceRegistryHandler} from "../serviceRegistry/ServiceRegistryHandler";
 
 export interface AppManifestHandler {
   loadApps: () => Observable<AppManifest[]>;
@@ -54,9 +54,9 @@ export class DefaultAppManifestHandler implements AppManifestHandler {
                     this.serviceRegistryHandler
                       .getService(backend.serviceId, backend.serviceVersion)
                       .pipe(
-                        map((service) => ({
+                        map((service: Service) => ({
                           ...backend,
-                          serviceUrl: service.url,
+                          serviceUrl: service.serviceUrl,
                         }))
                       )
                 );

@@ -3,9 +3,9 @@ import { fromFetch } from "rxjs/fetch";
 import { map, switchMap } from "rxjs/operators";
 
 export type Service = {
-  id: string;
-  version: string;
-  url: string;
+  serviceId: string;
+  serviceVersion: string;
+  serviceUrl: string;
 };
 export interface ServiceRegistryHandler {
   getService(id: string, version: string): Observable<Service>;

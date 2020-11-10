@@ -16,7 +16,7 @@
 
     <ul>
       {#each backends as backend}
-        <div>{backend.name}: {backend.serviceUrl}</div>
+        <div>{backend.serviceName}: {backend.serviceUrl}</div>
       {/each}
     </ul>
   {:else}App has not registered any backends.{/if}
