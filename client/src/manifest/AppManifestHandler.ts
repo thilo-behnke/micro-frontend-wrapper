@@ -106,7 +106,7 @@ export class DefaultAppManifestHandler implements AppManifestHandler {
       }
       await newAppReg!.init({
         container: contentBox!,
-        backends: newApp.services,
+        services: newApp.services,
       });
     }
   }

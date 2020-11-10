@@ -12,7 +12,7 @@ export type DestroyFunc = () => Promise<void>;
 
 export type InitArgs = {
   container: HTMLElement;
-  backends: ServiceManifest[];
+  services: ServiceManifest[];
 };
 
 export type MicroFrontendAppDefinition = {
