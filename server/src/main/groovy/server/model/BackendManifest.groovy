@@ -6,9 +6,8 @@ import javax.annotation.concurrent.Immutable
 
 @Entity
 class BackendManifest {
-    String id
-    String name
-    String version
+    String backendId
+    String backendVersion
 
     static mapping = {
         collection "backends"

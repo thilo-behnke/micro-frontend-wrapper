@@ -8,7 +8,7 @@ import server.model.AppManifest
 import javax.inject.Singleton
 
 @Singleton
-@Requires(env = 'prod')
+@Requires(env = ['prod', 'docker_dev'])
 class MongoManifestService implements ManifestService {
     @Override
     List<AppManifest> getManifests() {

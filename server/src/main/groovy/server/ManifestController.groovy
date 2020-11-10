@@ -26,7 +26,7 @@ class ManifestController {
 
     // TODO: Permissions!
     @Post
-    HttpResponse registerService(@Body AppManifest appManifest) {
+    HttpResponse registerApp(@Body AppManifest appManifest) {
         try {
             manifestService.registerApp(appManifest)
         } catch(AppAlreadyRegisteredException ex) {

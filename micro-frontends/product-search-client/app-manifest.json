@@ -4,8 +4,8 @@
   "appVersion": "__version__",
   "backends": [
     {
-      "id": "product-search-api",
-      "version": "1.0.0"
+      "backendId": "product-search-api",
+      "backendVersion": "1.0.0"
     }
   ]
 }
