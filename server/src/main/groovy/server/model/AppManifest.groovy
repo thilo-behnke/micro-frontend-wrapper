@@ -11,4 +11,8 @@ class AppManifest {
     String appUrl
 
     List<BackendManifest> backends = []
+
+    static mapping = {
+        collection "manifests"
+    }
 }
