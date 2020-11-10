@@ -20,7 +20,7 @@ npm install
 npm run build
 
 app_version=$(jq -r '.appVersion' public/build/app-manifest.json)
-js_bundle_filename=public/build/product-search-app__$app_version.js
+js_bundle_filename="public/build/product-search-app__$app_version.js"
 app_url="$S3_URL/$js_bundle_filename"
 json=$(jq -r --arg app_url $app_url '. + {appUrl: $app_url}' public/build/app-manifest.json)
 
