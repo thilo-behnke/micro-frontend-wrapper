@@ -2,10 +2,10 @@
   "appId": "product-search-app",
   "appName": "Product Search",
   "appVersion": "__version__",
-  "backends": [
+  "services": [
     {
-      "backendId": "product-search-api",
-      "backendVersion": "1.0.0"
+      "serviceId": "product-search-api",
+      "serviceVersion": "1.0.0"
     }
   ]
 }

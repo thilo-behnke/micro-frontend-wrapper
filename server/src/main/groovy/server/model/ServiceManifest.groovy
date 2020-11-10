@@ -5,9 +5,9 @@ import grails.gorm.annotation.Entity
 import javax.annotation.concurrent.Immutable
 
 @Entity
-class BackendManifest {
-    String backendId
-    String backendVersion
+class ServiceManifest {
+    String serviceId
+    String serviceVersion
 
     static mapping = {
         collection "backends"

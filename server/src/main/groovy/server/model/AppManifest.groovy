@@ -1,7 +1,6 @@
 package server.model
 
 import grails.gorm.annotation.Entity
-import groovy.transform.Immutable
 
 @Entity
 class AppManifest {
@@ -10,7 +9,7 @@ class AppManifest {
     String appVersion
     String appUrl
 
-    List<BackendManifest> backends = []
+    List<ServiceManifest> services = []
 
     static mapping = {
         collection "manifests"
