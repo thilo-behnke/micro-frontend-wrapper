@@ -10,6 +10,12 @@ import javax.inject.Singleton
 @Singleton
 @Requires(env = 'prod')
 class MongoServiceRegistrationService implements ServiceRegistryService {
+
+    @Override
+    List<Service> getServices() {
+        return Service.findAll()
+    }
+
     @Override
     Optional<Service> getService(String id, String version) {
         return Optional.ofNullable(Service.findByServiceIdAndServiceVersion(id, version))
@@ -22,6 +28,6 @@ class MongoServiceRegistrationService implements ServiceRegistryService {
         if(existingService) {
             throw new ServiceAlreadyRegisteredException(service.serviceId, service.serviceVersion)
         }
-        service.insert()
+        service.insert(failOnError: true)
     }
 }

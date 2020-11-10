@@ -20,6 +20,12 @@ class ServiceRegistryController {
     @Inject
     ServiceRegistryService serviceRegistryService
 
+    @Get('/')
+    Single<List<Service>> getServices() {
+        // TODO: Handle errors.
+        return Single.just(serviceRegistryService.getServices())
+    }
+
     @Get('/{id}/{version}')
     Single<Service> getService(@PathVariable String id, @PathVariable String version) {
         // TODO: Handle errors.

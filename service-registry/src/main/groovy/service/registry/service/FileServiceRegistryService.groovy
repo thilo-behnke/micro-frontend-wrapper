@@ -15,6 +15,11 @@ class FileServiceRegistryService implements ServiceRegistryService {
     private String filename = '.service-registry.json'
 
     @Override
+    List<Service> getServices() {
+        return loadServices()
+    }
+
+    @Override
     Optional<Service> getService(String id, String version) {
         def services = loadServices()
         def matchingService = services.find {it.serviceId == id && it.serviceVersion == version}
