@@ -38,5 +38,6 @@ ssh $PRODUCT_SEARCH_API_SERVER_USER@$PRODUCT_SEARCH_API_SERVER_URL "docker stop 
 ssh $PRODUCT_SEARCH_API_SERVER_USER@$PRODUCT_SEARCH_API_SERVER_URL docker pull $DOCKER_REGISTRY/micro_frontend_wrapper_product_search_backend:latest
 ssh $PRODUCT_SEARCH_API_SERVER_USER@$PRODUCT_SEARCH_API_SERVER_URL docker run -d --name product_search_backend $DOCKER_REGISTRY/micro_frontend_wrapper_product_search_backend:latest
 
-curl -X POST -H "Content-Type: application/json" -d "$(cat service-manifest.json)" $SERVICE_REGISTRY_URL/service-registry-api/services
+service_url="http://$PRODUCT_SEARCH_API_SERVER_URL"
+curl -X POST -H "Content-Type: application/json" -d "$(jq -r --arg service_url $service_url '. + {serviceUrl: $service_url}' service-manifest.json)" $SERVICE_REGISTRY_URL/service-registry-api/services
 
