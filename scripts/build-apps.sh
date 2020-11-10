@@ -24,7 +24,7 @@ js_bundle_filename=public/build/product-search-app__$app_version.js
 app_url="$S3_URL/$js_bundle_filename"
 json=$(jq -r --arg app_url $app_url '. + {appUrl: $app_url}' public/build/app-manifest.json)
 
-aws s3 cp js_bundle_filename s3://micro-frontend-app-assets
+aws s3 cp "$js_bundle_filename" s3://micro-frontend-app-assets
 curl -X POST -H "Content-Type: application/json" -d json $APP_REGISTRY_URL/manifest-api/manifests
 
 # Deploy and register micro frontend bff.
