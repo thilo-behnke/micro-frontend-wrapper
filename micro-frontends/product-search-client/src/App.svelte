@@ -5,18 +5,18 @@
 </style>
 
 <script lang="ts">
-  export let backends;
+  export let services;
 </script>
 
 <main class="test">
-  {#if backends.length}
+  {#if services.length}
     App has
-    {backends.length}
-    {backends.length > 1 ? 'backends' : 'backend'}:
+    {services.length}
+    {services.length > 1 ? 'backends' : 'backend'}:
 
     <ul>
-      {#each backends as backend}
-        <div>{backend.name}: {backend.serviceUrl}</div>
+      {#each services as service}
+        <div>{service.serviceName}: {service.serviceUrl}</div>
       {/each}
     </ul>
   {:else}App has not registered any backends.{/if}

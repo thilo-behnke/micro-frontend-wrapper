@@ -11,9 +11,9 @@ import {
   tap,
 } from "rxjs/operators";
 import { fromFetch } from "rxjs/fetch";
-import { AppManifest, Backend } from "./AppManifest";
+import { AppManifest, ServiceManifest } from "./AppManifest";
 import { AppRegistry } from "./AppRegistry";
-import { ServiceRegistryHandler } from "../serviceRegistry/ServiceRegistryHandler";
+import {Service, ServiceRegistryHandler} from "../serviceRegistry/ServiceRegistryHandler";
 
 export interface AppManifestHandler {
   loadApps: () => Observable<AppManifest[]>;
@@ -35,35 +35,36 @@ export class DefaultAppManifestHandler implements AppManifestHandler {
       switchMap((res) => res.json()),
       tap((apps: AppManifest[]) => {
         // TODO: Handle deregistration case.
-        apps.forEach(({ url }) => {
+        apps.forEach(({ appUrl }) => {
           const script = document.createElement("script");
-          script.src = url;
+          script.src = appUrl;
           script.async = true;
           document.body.append(script);
         });
       }),
       mergeMap((apps: AppManifest[]) => {
         const appsWithBackends = apps.map(
-          ({ backends, ...rest }): Observable<AppManifest> => {
+          ({ services, ...rest }): Observable<AppManifest> => {
             // TODO: Ideally this should not be done right away, but when the apps are loaded. This is not important until the app is actually used.
-            const backendsWithUrl = !backends.length
+            const backendsWithUrl = !services.length
               ? of([])
-              : backends.map(
-                  (backend: Backend): Observable<Backend> =>
+              : services.map(
+                  (backend: ServiceManifest): Observable<ServiceManifest> =>
                     // TODO: Handle errors.
                     this.serviceRegistryHandler
-                      .getService(backend.id, backend.version)
+                      .getService(backend.serviceId, backend.serviceVersion)
                       .pipe(
-                        map((service) => ({
+                        map((service: Service) => ({
                           ...backend,
-                          serviceUrl: service.url,
+                          serviceName: service.serviceName,
+                          serviceUrl: service.serviceUrl,
                         }))
                       )
                 );
             return forkJoin(backendsWithUrl).pipe(
               map(
-                (newBackends: Backend[]): AppManifest => ({
-                  backends: newBackends,
+                (newBackends: ServiceManifest[]): AppManifest => ({
+                  services: newBackends,
                   ...rest,
                 })
               )
@@ -86,27 +87,27 @@ export class DefaultAppManifestHandler implements AppManifestHandler {
       contentBox!.innerHTML = "";
       const prevAppReg = this.appRegistry.getApp(
         prevApp.appId,
-        prevApp.version
+        prevApp.appVersion
       );
       if (!prevAppReg) {
         console.warn(
-          `Could not properly destroy app ${prevApp.appId} version ${prevApp.version}. This could e.g. cause memory leaks!`
+          `Could not properly destroy app ${prevApp.appId} version ${prevApp.appVersion}. This could e.g. cause memory leaks!`
         );
         return;
       }
       await prevAppReg!.destroy();
     }
     if (newApp) {
-      const newAppReg = this.appRegistry.getApp(newApp.appId, newApp.version);
+      const newAppReg = this.appRegistry.getApp(newApp.appId, newApp.appVersion);
       if (!newAppReg) {
         console.error(
-          `Could not initialize app ${newApp.appId} version ${newApp.version}.`
+          `Could not initialize app ${newApp.appId} version ${newApp.appVersion}.`
         );
         return;
       }
       await newAppReg!.init({
         container: contentBox!,
-        backends: newApp.backends,
+        services: newApp.services,
       });
     }
   }

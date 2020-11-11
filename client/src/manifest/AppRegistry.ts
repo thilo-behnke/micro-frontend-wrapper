@@ -1,5 +1,5 @@
 import { areAppDefinitionsEqual } from "./ManifestUtils";
-import { Backend } from "./AppManifest";
+import { ServiceManifest } from "./AppManifest";
 
 export interface AppRegistry {
   register(appDef: MicroFrontendAppDefinition): void;
@@ -12,7 +12,7 @@ export type DestroyFunc = () => Promise<void>;
 
 export type InitArgs = {
   container: HTMLElement;
-  backends: Backend[];
+  services: ServiceManifest[];
 };
 
 export type MicroFrontendAppDefinition = {

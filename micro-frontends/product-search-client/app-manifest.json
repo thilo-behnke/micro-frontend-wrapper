@@ -1,0 +1,11 @@
+{
+  "appId": "product-search-app",
+  "appName": "Product Search",
+  "appVersion": "__version__",
+  "services": [
+    {
+      "serviceId": "product-search-api",
+      "serviceVersion": "1.0.0"
+    }
+  ]
+}

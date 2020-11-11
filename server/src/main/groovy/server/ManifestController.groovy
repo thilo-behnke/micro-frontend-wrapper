@@ -1,28 +1,37 @@
 package server
 
+import io.micronaut.http.HttpResponse
+import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
+import io.micronaut.http.annotation.Post
 import io.reactivex.Single
+import server.exception.AppAlreadyRegisteredException
 import server.model.AppManifest
-import server.model.BackendManifest
+import server.service.ManifestService
+
+import javax.inject.Inject
 
 @Controller("/manifest-api/manifests")
 class ManifestController {
 
+    @Inject
+    private ManifestService manifestService
+
     @Get("/")
     Single<List<AppManifest>> getAppManifests() {
-        def manifests = [
-                new AppManifest(appId: 'simple-js-app', appName: 'Simple JS App', version: "1.0.1", url: "/assets/my-app__1.0.1__023942384.js"),
-                new AppManifest(appId: 'other-simple-js-app', appName: 'Other simple JS App', version: "0.3.0", url: "/assets/my-other-app__0.3.0__20394820934.js"),
-                new AppManifest(appId: 'product-search-app', appName: 'Product Search', version: "1.0.0", url: "/assets/product-search-app__1.0.0.js", backends: [
-                        // TODO: Reusabilty of backends.
-                        new BackendManifest(
-                                id: 'product-search-api',
-                                name: 'Product Search Api',
-                                version: '1.0.0'
-                        )
-                ])
-        ]
+        def manifests = manifestService.manifests
         return Single.just(manifests)
+    }
+
+    // TODO: Permissions!
+    @Post
+    HttpResponse registerApp(@Body AppManifest appManifest) {
+        try {
+            manifestService.registerApp(appManifest)
+        } catch(AppAlreadyRegisteredException ex) {
+            return HttpResponse.badRequest(ex.message)
+        }
+        return HttpResponse.ok()
     }
 }

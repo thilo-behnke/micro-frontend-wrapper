@@ -2,6 +2,7 @@
 .idea
 .gradle
 .service-registry.json
+.app-manifests.json
 
 # dependencies
 node_modules

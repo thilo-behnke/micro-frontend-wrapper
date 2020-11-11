@@ -1,15 +1,15 @@
 export type AppManifest = {
   appId: string;
   appName: string;
-  version: string;
-  url: string;
-  backends: Backend[];
+  appVersion: string;
+  appUrl: string;
+  services: ServiceManifest[];
 };
 
-export type Backend = {
-  id: string;
-  name: string;
-  version: string;
+export type ServiceManifest = {
+  serviceId: string;
+  serviceName?: string;
+  serviceVersion: string;
   // TODO: This is optional until the service registry was queried - improve typing.
   serviceUrl?: string;
 };
