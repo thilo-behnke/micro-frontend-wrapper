@@ -5,6 +5,7 @@ import { map, switchMap } from "rxjs/operators";
 export type Service = {
   serviceId: string;
   serviceVersion: string;
+  serviceName: string;
   serviceUrl: string;
 };
 export interface ServiceRegistryHandler {

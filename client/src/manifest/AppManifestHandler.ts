@@ -56,6 +56,7 @@ export class DefaultAppManifestHandler implements AppManifestHandler {
                       .pipe(
                         map((service: Service) => ({
                           ...backend,
+                          serviceName: service.serviceName,
                           serviceUrl: service.serviceUrl,
                         }))
                       )
