@@ -1,4 +1,5 @@
 {
   "serviceId": "product-search-api",
+  "serviceName": "Product Search Api",
   "serviceVersion": "1.0.0"
 }

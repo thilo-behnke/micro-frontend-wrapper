@@ -41,3 +41,8 @@ ssh $PRODUCT_SEARCH_API_SERVER_USER@$PRODUCT_SEARCH_API_SERVER_URL docker run -d
 service_url="http://$PRODUCT_SEARCH_API_SERVER_URL"
 curl -X POST -H "Content-Type: application/json" -d "$(jq -r --arg service_url $service_url '. + {serviceUrl: $service_url}' service-manifest.json)" $SERVICE_REGISTRY_URL/service-registry-api/services
 
+
+# Cleanup
+
+docker system prune -f --volumes
+

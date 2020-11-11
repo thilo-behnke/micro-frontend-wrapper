@@ -6,9 +6,6 @@ set -u
 
 echo "Using docker registry: $DOCKER_REGISTRY"
 
-(docker stop server && docker rm server && false) || (docker stop server_mongo && docker rm server_mongo && false) || (docker stop service_registry && docker rm service_registry && false) || (docker stop service_registry_mongo && docker rm service_registry_mongo && false) || (docker stop client && docker rm client && false) || true
-docker image rm $(sudo docker image ls -q) || true
-
 docker network create 'app-net' || true
 
 docker pull $DOCKER_REGISTRY/micro_frontend_wrapper_server:latest
@@ -25,3 +22,5 @@ docker run -d --env-file .env-production --name service_registry_mongo --network
 
 docker pull $DOCKER_REGISTRY/micro_frontend_wrapper_client:latest
 docker run -d --env-file .env-production --name client --network "app-net" -p "80:80" $DOCKER_REGISTRY/micro_frontend_wrapper_client:latest
+
+docker system prune -f --volumes
