@@ -23,4 +23,4 @@ docker run -d --env-file .env-production --name service_registry_mongo --network
 docker pull $DOCKER_REGISTRY/micro_frontend_wrapper_client:latest
 docker run -d --env-file .env-production --name client --network "app-net" -p "80:80" $DOCKER_REGISTRY/micro_frontend_wrapper_client:latest
 
-docker system prune -f --volumes
+#docker system prune -f --volumes

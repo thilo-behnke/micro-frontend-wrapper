@@ -43,6 +43,5 @@ curl -X POST -H "Content-Type: application/json" -d "$(jq -r --arg service_url $
 
 
 # Cleanup
-
-docker system prune -f --volumes
+#docker system prune -f --volumes
 
