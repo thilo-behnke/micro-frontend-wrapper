@@ -33,7 +33,7 @@
     },
     {
       key: "release",
-      title: "Price in $",
+      title: "Release Date",
       value: (v) => dayjs(v.release).format("DD-MM-YYYY"),
       sortable: true,
     },
