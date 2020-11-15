@@ -40,7 +40,8 @@
     {
       key: "actions",
       title: "",
-      renderValue: () => '<button class="btn btn-primary">Order</button>',
+      renderValue: () =>
+        '<button class="btn btn-primary">Add to basket</button>',
     },
   ];
 
@@ -55,9 +56,8 @@
     .then((resProducts) => (products = resProducts));
 </script>
 
-<link
-  rel="stylesheet"
-  href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+<!--TODO: Add search.-->
+<!--TODO: Implement add to basket button.-->
 <main class="wrapper">
   {#if products?.length}
     <SvelteTable {columns} rows={products} classNameTable="table table-dark" />
