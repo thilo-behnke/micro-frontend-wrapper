@@ -40,6 +40,15 @@ import App from "./App.svelte";
     container.style.marginLeft = "auto";
     container.style.marginRight = "auto";
     document.body.append(container);
-    createApp({ container, backends: [] });
+    createApp({
+      container,
+      services: [
+        {
+          serviceName: "product-search-api",
+          version: "1.0.0",
+          serviceUrl: "http://localhost:9000",
+        } as any,
+      ],
+    });
   }
 })();
