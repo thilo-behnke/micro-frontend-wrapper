@@ -8,8 +8,8 @@ import javax.inject.Singleton
 class ProductService {
     
     private final PRODUCTS = [
-            new Product(id: 0, name: "Xbox", desc: "Video game console by Microsoft", price: 399.99),
-            new Product(id: 1, name: "Playstation", desc: "Video game console by Sony", price: 499.99)
+            new Product(id: 0, name: "Xbox", desc: "Video game console by Microsoft", price: 399.99, release: new Date()),
+            new Product(id: 1, name: "Playstation", desc: "Video game console by Sony", price: 499.99, release: new Date())
     ]
     
     List<Product> getProducts(String name = null) {

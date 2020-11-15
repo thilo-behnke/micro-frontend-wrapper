@@ -7,13 +7,41 @@
 
 <script lang="ts">
   import SvelteTable from "svelte-table";
+  import dayjs from "dayjs";
 
   export let services;
 
   let products;
 
   const columns = [
-    { key: "name", title: "Product Name", value: (v) => v.name },
+    {
+      key: "name",
+      title: "Product Name",
+      value: (v) => v.name,
+      sortable: true,
+    },
+    {
+      key: "desc",
+      title: "Description",
+      value: (v) => (v.desc.length < 40 ? v.desc : v.desc.slice(0, 40) + "..."),
+    },
+    {
+      key: "price",
+      title: "Price in $",
+      value: (v) => v.price,
+      sortable: true,
+    },
+    {
+      key: "release",
+      title: "Price in $",
+      value: (v) => dayjs(v.release).format("DD-MM-YYYY"),
+      sortable: true,
+    },
+    {
+      key: "actions",
+      title: "",
+      renderValue: () => '<button class="btn btn-primary">Order</button>',
+    },
   ];
 
   const productSearchServiceUrl = services.find(
