@@ -3,6 +3,11 @@
     margin-right: 10px;
     width: 100%;
   }
+
+  .product-table__search {
+    width: 100%;
+    margin-bottom: 5px;
+  }
 </style>
 
 <script lang="ts">
@@ -11,7 +16,16 @@
 
   export let services;
 
-  let products;
+  let products = [];
+  let searchText;
+
+  $: filteredProducts = searchText
+    ? products.filter(
+        ({ name, desc }) =>
+          name.toLowerCase().includes(searchText.toLowerCase()) ||
+          desc.toLowerCase().includes(searchText.toLowerCase())
+      )
+    : products;
 
   const columns = [
     {
@@ -56,10 +70,16 @@
     .then((resProducts) => (products = resProducts));
 </script>
 
-<!--TODO: Add search.-->
 <!--TODO: Implement add to basket button.-->
 <main class="wrapper">
   {#if products?.length}
-    <SvelteTable {columns} rows={products} classNameTable="table table-dark" />
-  {:else}App has not registered any backends.{/if}
+    <input
+      class="product-table__search"
+      placeholder="search products by name or description"
+      bind:value={searchText} />
+    <SvelteTable
+      {columns}
+      rows={filteredProducts}
+      classNameTable="table table-dark" />
+  {:else}loading...{/if}
 </main>
