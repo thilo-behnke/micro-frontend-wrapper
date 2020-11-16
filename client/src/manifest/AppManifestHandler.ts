@@ -14,6 +14,7 @@ import { fromFetch } from "rxjs/fetch";
 import { AppManifest, ServiceManifest } from "./AppManifest";
 import { AppRegistry } from "./AppRegistry";
 import {Service, ServiceRegistryHandler} from "../serviceRegistry/ServiceRegistryHandler";
+import {EventHandler} from "../events/EventHandler";
 
 export interface AppManifestHandler {
   loadApps: () => Observable<AppManifest[]>;
@@ -27,7 +28,8 @@ export interface AppManifestHandler {
 export class DefaultAppManifestHandler implements AppManifestHandler {
   constructor(
     private appRegistry: AppRegistry,
-    private serviceRegistryHandler: ServiceRegistryHandler
+    private serviceRegistryHandler: ServiceRegistryHandler,
+    private eventHandler: EventHandler
   ) {}
 
   loadApps = () => {
@@ -108,6 +110,7 @@ export class DefaultAppManifestHandler implements AppManifestHandler {
       await newAppReg!.init({
         container: contentBox!,
         services: newApp.services,
+        eventHandler: this.eventHandler
       });
     }
   }

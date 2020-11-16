@@ -1,5 +1,6 @@
 import { areAppDefinitionsEqual } from "./ManifestUtils";
 import { ServiceManifest } from "./AppManifest";
+import {EventHandler} from "../events/EventHandler";
 
 export interface AppRegistry {
   register(appDef: MicroFrontendAppDefinition): void;
@@ -13,6 +14,7 @@ export type DestroyFunc = () => Promise<void>;
 export type InitArgs = {
   container: HTMLElement;
   services: ServiceManifest[];
+  eventHandler: EventHandler;
 };
 
 export type MicroFrontendAppDefinition = {

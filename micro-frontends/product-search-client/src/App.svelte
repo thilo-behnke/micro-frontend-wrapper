@@ -15,6 +15,7 @@
   import dayjs from "dayjs";
 
   export let services;
+  export let eventHandler;
 
   let products = [];
   let searchText;
@@ -54,8 +55,9 @@
     {
       key: "actions",
       title: "",
+      // TODO: This does not work because only plain html is allowed. What is a solution for this?
       renderValue: () =>
-        '<button class="btn btn-primary">Add to basket</button>',
+        '<button class="btn btn-primary" onclick={eventHandler.send("add_to_basket", 1)}>Add to basket</button>',
     },
   ];
 
