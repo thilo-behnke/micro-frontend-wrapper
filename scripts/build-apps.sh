@@ -31,6 +31,7 @@ curl -X POST -H "Content-Type: application/json" -d "$json" $APP_REGISTRY_URL/ma
 
 cd ../product-search-backend
 
+export MICRONAUT_ENVIRONMENTS=prod
 docker build -t $DOCKER_REGISTRY/micro_frontend_wrapper_product_search_backend:$BUILD_NUMBER -t $DOCKER_REGISTRY/micro_frontend_wrapper_product_search_backend:latest .
 docker push $DOCKER_REGISTRY/micro_frontend_wrapper_product_search_backend
 

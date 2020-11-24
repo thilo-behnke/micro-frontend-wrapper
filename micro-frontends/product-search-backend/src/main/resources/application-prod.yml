@@ -8,4 +8,4 @@ micronaut:
       configurations:
         web:
           allowedOrigins:
-            - "http://localhost:5000"
+            - "http://micro-frontend.whos-coding.com"
