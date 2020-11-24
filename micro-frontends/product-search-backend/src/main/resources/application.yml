@@ -8,4 +8,5 @@ micronaut:
       configurations:
         web:
           allowedOrigins:
+            # TODO: Fix cors issue for production.
             - "http://localhost:5000"
