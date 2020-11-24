@@ -2,11 +2,13 @@
   .wrapper {
     margin-right: 10px;
     width: 100%;
+    display: flex;
+    flex-flow: column;
   }
 
   .product-table__search {
     width: 100%;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
   }
 </style>
 
@@ -16,7 +18,7 @@
   import AddToBasketButton from "./AddToBasketButton.svelte";
 
   export let services;
-  export let eventHandler;
+  // export let eventHandler;
 
   let products = [];
   let searchText;
