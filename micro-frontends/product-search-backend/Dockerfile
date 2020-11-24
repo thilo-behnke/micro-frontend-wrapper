@@ -1,9 +1,14 @@
 FROM openjdk:14-alpine
 
 ARG MICRONAUT_ENVIRONMENTS
+ENV MICRONAUT_ENVIRONMENTS=${MICRONAUT_ENVIRONMENTS}
 
-COPY . /app
 WORKDIR /app
+
+COPY ./gradlew /app
+COPY ./gradle /app/gradle
+RUN ./gradlew --version
+COPY . /app
 RUN ./gradlew build
 
 RUN cp build/libs/product-search-backend-*-all.jar product-search-backend.jar
