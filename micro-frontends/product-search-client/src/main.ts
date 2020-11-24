@@ -45,7 +45,7 @@ import App from "./App.svelte";
       container,
       services: [
         {
-          serviceName: "product-search-api",
+          serviceId: "product-search-api",
           version: "1.0.0",
           serviceUrl: "http://localhost:9000",
         } as any,

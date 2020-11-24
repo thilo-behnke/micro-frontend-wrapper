@@ -62,7 +62,7 @@
   ];
 
   const productSearchServiceUrl = services.find(
-    ({ serviceName }) => serviceName === "product-search-api"
+    ({ serviceId }) => serviceId === "product-search-api"
   )?.serviceUrl;
   if (!productSearchServiceUrl) {
     throw new Error("Cant find any registered service for product search api.");
