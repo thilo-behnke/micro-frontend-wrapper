@@ -4,11 +4,12 @@ import App from "./App.svelte";
   const appId = "product-search-app";
   const version = "1.0.0";
 
-  const createApp = ({ container, services }) => {
+  const createApp = ({ container, services, eventHandler }) => {
     new App({
       target: container,
       props: {
         services,
+        eventHandler,
       },
     });
   };
@@ -40,6 +41,20 @@ import App from "./App.svelte";
     container.style.marginLeft = "auto";
     container.style.marginRight = "auto";
     document.body.append(container);
-    createApp({ container, backends: [] });
+    createApp({
+      container,
+      services: [
+        {
+          serviceName: "product-search-api",
+          version: "1.0.0",
+          serviceUrl: "http://localhost:9000",
+        } as any,
+      ],
+      eventHandler: {
+        send: (eventName, payload) => {
+          console.log(`Send event ${eventName} with payload ${payload}.`);
+        },
+      },
+    });
   }
 })();

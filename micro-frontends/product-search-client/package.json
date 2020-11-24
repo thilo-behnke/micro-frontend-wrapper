@@ -30,7 +30,9 @@
     "typescript": "^3.9.3"
   },
   "dependencies": {
-    "sirv-cli": "^1.0.0"
+    "dayjs": "^1.9.6",
+    "sirv-cli": "^1.0.0",
+    "svelte-table": "^0.1.15"
   },
   "husky": {
     "hooks": {

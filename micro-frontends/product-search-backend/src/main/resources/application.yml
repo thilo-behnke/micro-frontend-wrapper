@@ -3,3 +3,9 @@ micronaut:
     name: productSearchBackend
   server:
     port: 9000
+    cors:
+      enabled: true
+      configurations:
+        web:
+          allowedOrigins:
+            - "http://localhost:5000"

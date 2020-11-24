@@ -35,7 +35,8 @@ const template = async ({ attributes, files, meta, publicPath, title }) => {
 		.join('\n');
 
 	const favicon = '<link rel="icon" type="image/x-icon" href="/favicon.png">'
-	const globalCss = ' <link href="global.css" rel="stylesheet">';
+	const globalCss = '<link href="global.css" rel="stylesheet">';
+	const bootstrap = `<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />`;
 
 	return `
 <!doctype html>
@@ -46,6 +47,7 @@ const template = async ({ attributes, files, meta, publicPath, title }) => {
     ${links}
     ${globalCss}
     ${favicon}
+    ${bootstrap}
   </head>
   <body>
     ${scripts}
