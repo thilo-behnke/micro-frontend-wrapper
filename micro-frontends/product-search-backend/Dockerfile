@@ -1,5 +1,7 @@
 FROM openjdk:14-alpine
 
+ARG MICRONAUT_ENVIRONMENTS
+
 COPY . /app
 WORKDIR /app
 RUN ./gradlew build
