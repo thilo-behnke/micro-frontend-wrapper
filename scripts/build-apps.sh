@@ -36,7 +36,7 @@ docker push $DOCKER_REGISTRY/micro_frontend_wrapper_product_search_backend
 
 ssh $PRODUCT_SEARCH_API_SERVER_USER@$PRODUCT_SEARCH_API_SERVER_URL "docker stop product_search_backend && docker rm product_search_backend || true"
 ssh $PRODUCT_SEARCH_API_SERVER_USER@$PRODUCT_SEARCH_API_SERVER_URL docker pull $DOCKER_REGISTRY/micro_frontend_wrapper_product_search_backend:latest
-ssh $PRODUCT_SEARCH_API_SERVER_USER@$PRODUCT_SEARCH_API_SERVER_URL docker run -p "9000:9000" -d --name product_search_backend $DOCKER_REGISTRY/micro_frontend_wrapper_product_search_backend:latest
+ssh $PRODUCT_SEARCH_API_SERVER_USER@$PRODUCT_SEARCH_API_SERVER_URL docker run -p "80:9000" -d --name product_search_backend $DOCKER_REGISTRY/micro_frontend_wrapper_product_search_backend:latest
 
 service_url="http://$PRODUCT_SEARCH_API_SERVER_URL"
 curl -X POST -H "Content-Type: application/json" -d "$(jq -r --arg service_url $service_url '. + {serviceUrl: $service_url}' service-manifest.json)" $SERVICE_REGISTRY_URL/service-registry-api/services
