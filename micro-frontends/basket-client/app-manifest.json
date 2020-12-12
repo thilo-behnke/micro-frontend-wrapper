@@ -1,0 +1,11 @@
+{
+  "appId": "basket-app",
+  "appName": "Basket",
+  "appVersion": "__version__",
+  "services": [
+    {
+      "serviceId": "basket-api",
+      "serviceVersion": "1.0.0"
+    }
+  ]
+}

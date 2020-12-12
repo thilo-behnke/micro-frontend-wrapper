@@ -1,0 +1,11 @@
+micronaut:
+  application:
+    name: productSearchBackend
+  server:
+    port: 9000
+    cors:
+      enabled: true
+      configurations:
+        web:
+          allowedOrigins:
+            - "http://micro-frontend.whos-coding.com"

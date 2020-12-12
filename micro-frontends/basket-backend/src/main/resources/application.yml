@@ -1,0 +1,11 @@
+micronaut:
+  application:
+    name: productSearchBackend
+  server:
+    port: 9010
+    cors:
+      enabled: true
+      configurations:
+        web:
+          allowedOrigins:
+            - "http://localhost:5000"
