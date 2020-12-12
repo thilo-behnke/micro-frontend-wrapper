@@ -15,12 +15,32 @@
 <script lang="ts">
   import SvelteTable from "svelte-table";
   import dayjs from "dayjs";
-  import AddToBasketButton from "./AddToBasketButton.svelte";
+  import BasketActions from "./BasketActions.svelte";
+  import type { Product } from "./model/product";
+  import type {
+    EventHandler,
+    IncrementBasketCount,
+  } from "./model/micro-frontend";
+  import { EventType } from "./model/micro-frontend";
 
   export let services;
-  // export let eventHandler;
+  export let eventHandler: EventHandler;
 
-  let products = [];
+  const onIncrementBasket = (product: Product) => {
+    eventHandler.send<Product>({
+      type: EventType.INCREMENT_BASKET_COUNT,
+      payload: product,
+    });
+  };
+
+  const onDecrementBasket = (product: Product) => {
+    eventHandler.send<Product>({
+      type: EventType.DECREMENT_BASKET_COUNT,
+      payload: product,
+    });
+  };
+
+  let products: Product[] = [];
   let searchText;
 
   $: filteredProducts = searchText
@@ -58,8 +78,13 @@
     {
       key: "actions",
       title: "",
-      // TODO: This does not work because only plain html is allowed. What is a solution for this?
-      renderComponent: AddToBasketButton,
+      renderComponent: {
+        component: BasketActions,
+        props: {
+          onIncrementBasket,
+          onDecrementBasket,
+        },
+      },
     },
   ];
 
@@ -72,6 +97,10 @@
   fetch(productSearchServiceUrl + "/api/products")
     .then((res) => res.json())
     .then((resProducts) => (products = resProducts));
+
+  eventHandler
+    .receive(EventType.INCREMENT_BASKET_COUNT, EventType.DECREMENT_BASKET_COUNT)
+    .subscribe(console.log);
 </script>
 
 <!--TODO: Implement add to basket button.-->

@@ -31,8 +31,9 @@
   },
   "dependencies": {
     "dayjs": "^1.9.6",
+    "rxjs": "^6.6.3",
     "sirv-cli": "^1.0.0",
-    "svelte-table": "^0.1.15"
+    "svelte-table": "^0.1.16"
   },
   "husky": {
     "hooks": {

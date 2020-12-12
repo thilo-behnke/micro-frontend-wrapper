@@ -1,20 +1,26 @@
 import {Observable, ReplaySubject} from "rxjs";
-import {filter} from "rxjs/operators";
+import {filter, map} from "rxjs/operators";
+import {EventType} from "../../../micro-frontends/product-search-client/src/model/micro-frontend";
+
+export type BaseEvent<T> = { type: EventType, payload?: T }
 
 export interface EventHandler {
-    send(eventName: string, payload: any): void;
-    subscribe(eventName: string): Observable<any>;
+    send<T>(event: BaseEvent<T>): void;
+
+    receive<T, E extends BaseEvent<T>>(...type: string[]): Observable<E>;
 }
 
-export class DefaultEventHandler implements EventHandler {
-    
-    private subject = new ReplaySubject<{eventName: string; payload: any}>();
+export class EventHandlerStub implements EventHandler {
+    private subject = new ReplaySubject<{ type: string; payload: any }>();
 
-    send(eventName: string, payload: any): void {
-        this.subject.next({eventName, payload});
+    send<T>({ type, payload }: BaseEvent<T>): void {
+        this.subject.next({ type, payload });
     }
 
-    subscribe(eventName: string): Observable<any> {
-        return this.subject.asObservable().pipe(filter(({eventName: name}) => name === eventName));
+    receive<T, E extends BaseEvent<T>>(...types: string[]): Observable<E> {
+        return this.subject.asObservable().pipe(
+            filter(({ type: name }) => types.includes(name)),
+            map((e) => e as E)
+        );
     }
 }

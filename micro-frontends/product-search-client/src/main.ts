@@ -1,4 +1,5 @@
 import App from "./App.svelte";
+import { EventHandlerStub } from "./model/micro-frontend";
 
 (() => {
   const appId = "product-search-app";
@@ -50,11 +51,7 @@ import App from "./App.svelte";
           serviceUrl: "http://localhost:9000",
         } as any,
       ],
-      eventHandler: {
-        send: (eventName, payload) => {
-          console.log(`Send event ${eventName} with payload ${payload}.`);
-        },
-      },
+      eventHandler: new EventHandlerStub(),
     });
   }
 })();
