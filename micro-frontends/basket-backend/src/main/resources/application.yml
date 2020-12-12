@@ -1,0 +1,15 @@
+micronaut:
+  application:
+    name: productSearchBackend
+  server:
+    port: 9010
+    cors:
+      enabled: true
+      configurations:
+        web:
+          allowedOrigins:
+            - "http://localhost:5000"
+jackson:
+  serialization-inclusion: NON_ABSENT # Omit null and Optional.empty(), but include empty collections
+  serialization:
+    indent-output: true # Pretty-print JSON

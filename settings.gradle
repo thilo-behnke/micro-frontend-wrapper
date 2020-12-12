@@ -1,5 +1,8 @@
 rootProject.name="web-client-wrapper"
 include 'server'
 include 'service-registry'
+
 include 'product-search-backend'
 project(':product-search-backend').projectDir = new File('./micro-frontends/product-search-backend')
+include 'basket-backend'
+project(':basket-backend').projectDir = new File('./micro-frontends/basket-backend')

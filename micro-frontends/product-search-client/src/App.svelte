@@ -103,7 +103,6 @@
     .subscribe(console.log);
 </script>
 
-<!--TODO: Implement add to basket button.-->
 <main class="wrapper">
   {#if products?.length}
     <input
