@@ -18,12 +18,12 @@ class BasketController {
         return Single.just(basketService.getBasket())
     }
 
-    @Patch('/${basketId}/items')
+    @Patch('/{basketId}/items')
     Single<Basket> updateBasketItems(@PathVariable Long basketId, @Body BasketUpdateDTO basketUpdateDTO) {
         return Single.just(basketService.changeBasketItemCount(basketUpdateDTO.product, basketUpdateDTO.count))
     }
 
-    @Delete('/${basketId}/items')
+    @Delete('/{basketId}/items')
     Single<Basket> emptyBasket(@PathVariable Long basketId) {
         return Single.just(basketService.emptyBasket())
     }

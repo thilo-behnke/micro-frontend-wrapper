@@ -3,7 +3,7 @@ package basket.backend.model
 import groovy.transform.Immutable
 
 class Basket {
-    List<BasketItem> items
+    List<BasketItem> items = []
 }
 
 class BasketItem {
